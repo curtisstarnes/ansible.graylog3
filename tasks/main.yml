@@ -1,0 +1,20 @@
+---
+# js.graylog3/tasks/main.yml
+
+# repo configuration
+- include_tasks: repos.yml
+
+# openjdk installation
+- include_tasks: java.yml
+
+# mongodb installation
+- include_tasks: mongodb.yml
+
+# elastic search installation and configuration
+- include_tasks: elasticsearch.yml
+
+# graylog installation and configuration
+- include_tasks: graylog.yml
+
+# install and configure nginx reverse proxy
+- include_tasks: nginx.yml

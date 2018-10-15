@@ -1,0 +1,21 @@
+---
+# vars/main.yml from joe-speedboat.ansible_graylog3
+
+packages_graylog_EL7:
+  - graylog-server
+  - pwgen
+
+packages_nginx_EL7:
+  - nginx
+  - openssl
+
+packages_elasticsearch_EL7:
+  - elasticsearch
+
+packages_java_EL7:
+  - java-1.8.0-openjdk-headless
+
+packages_mongodb_EL7:
+  - libselinux-python
+  - mongodb-org
+...
