@@ -3,7 +3,7 @@
 - name: Install and configure Graylog Server
   hosts: vm04
   roles:
-    - role: joe-speedboat.ansible_graylog3
+    - role: uniQconsulting.graylog3
       graylog3_admin_password: secret
 
   tasks:

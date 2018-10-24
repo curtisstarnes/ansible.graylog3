@@ -1,5 +1,5 @@
 ---
-# vars/main.yml from joe-speedboat.ansible_graylog3
+# vars/main.yml from uniQconsulting.graylog3
 
 packages_graylog_EL7:
   - graylog-server
