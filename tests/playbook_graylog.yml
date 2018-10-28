@@ -1,7 +1,7 @@
 ---
 # file: test/playbook_graylog.yml
 - name: Install and configure Graylog Server
-  hosts: vm21
+  hosts: vm22
   roles:
     - role: uniQconsulting.graylog3
       graylog3_admin_password: secret
