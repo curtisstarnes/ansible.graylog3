@@ -41,4 +41,4 @@ uniQconsulting ag is a company in Switzerland with Offices in Bassersdorf, Basel
 License
 -------
 https://opensource.org/licenses/LGPL-3.0    
-Copyright (c) uniQconsulting ag - Mike Gubser <mgubser@uniqconsulting.ch>
+Copyright (c) uniQconsulting ag - Chris Ruettimann cruettimann@uniqconsulting.ch
