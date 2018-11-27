@@ -1,36 +1,44 @@
-# js.graylog3/README.md
-This role installs and configure graylog3 single server.   
-It has no depencies and is easy to handle.   
-Use files in test directory to get started with this role.   
+[![Alt text](https://www.uniqconsulting.ch/images/logo.png)](https://www.uniqconsulting.ch/)
 
+Graylog3 Setup with Ansible
+===========================
 
-## Execution Requirements
-- Tested on CentOS 7
+This Ansible Role install, configure and update a Linux Graylog3 server. The following tasks will be configured:
+* `Install and configure MongoDB`
+* `Install and configure Elasticsearch`
+* `Install and configure Java`
+* `Install and configure Graylog3`
 
-## Role Variables
-* check `defaults/main.yml`
+Requirements
+------------
 
-## Features
-* Automatic restart of graylog service if config file has changed
+* Currently only tested with CentOS 7
+* Ansible 2.4 or higher is required for this Ansible Role
 
-## First Graylog Login:
-When you first login, define Inputs:
-System/Inputs > Inputs > Syslog UDP   
-  "launch new input"   
-    [x] Global   
-    Title: Unix Syslog   
-    Port: 1514   
-    "Save"   
+Role Variables
+--------------
 
-Now you can send syslog via UDP to Port 1514.   
+Variables are self speaking or documented in:   
+* `defaults/main.yml`
+* `vars/main.yml`
 
-# example playbooks for this role are located in `test` folder:
-* `playbook_graylog3.yml`: Real life example with firewalld configuration
+Dependencies
+------------
 
-# Upgrade Graylog to v3 from v2
-* https://github.com/Graylog2/graylog2-server/blob/master/UPGRADING.rst
+This Ansilbe Role has no dependencies to other Ansilbe Roles
 
-# License
-https://opensource.org/licenses/GPL-3.0    
-Copyright (c) Chris Ruettimann <chris@bitbull.ch>  
+Example Playbook
+----------------
 
+Example playbooks for this role are located in ´test´ folder:
+* `tests/playbook_graylog.yml`
+
+uniQconsulting ag
+-----------------
+
+uniQconsulting ag is a company in Switzerland with Offices in Bassersdorf, Basel and St. Gallen
+
+License
+-------
+https://opensource.org/licenses/LGPL-3.0    
+Copyright (c) uniQconsulting ag - Mike Gubser <mgubser@uniqconsulting.ch>
