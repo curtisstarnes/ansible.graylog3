@@ -1,0 +1,24 @@
+---
+- name: Install GeoIP database downloader script
+  template: 
+    src: geoip-update.sh.j2
+    dest: /usr/local/sbin/geoip-update.sh
+    owner: root 
+    group: root 
+    mode: 0700
+
+- name: Create a Monthly cronjob for updating GeoIP database
+  cron:
+    name: geoip update
+    minute: 1
+    hour: 1
+    day: 1
+    user: root
+    job: /usr/local/sbin/geoip-update.sh
+    cron_file: geoip-update
+
+- name: run geoip update
+  shell: /usr/local/sbin/geoip-update.sh
+  args:
+    warn: false
+...

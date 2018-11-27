@@ -1,0 +1,16 @@
+#!/bin/bash
+# update geoip database for graylog
+
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin
+URL='http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz'
+GDIR=/srv/geoip
+
+test -d $GDIR || mkdir -p $GDIR
+cd $GDIR || exit 1
+
+rm -f GeoLite2-City.*
+wget --quiet "$URL"
+gunzip GeoLite2-City.mmdb.gz
+
+systemctl restart graylog-server
+

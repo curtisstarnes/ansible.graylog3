@@ -16,6 +16,7 @@
 
 # graylog installation and configuration
 - include_tasks: graylog.yml
+- include_tasks: geoip.yml
 
 # install and configure nginx reverse proxy
 - include_tasks: nginx.yml
