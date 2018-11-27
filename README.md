@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/uniQconsulting-ag/ansible.os-basic.svg?branch=master)](https://travis-ci.org/uniQconsulting-ag/ansible.graylog3)
+
 [![Alt text](https://www.uniqconsulting.ch/images/logo.png)](https://www.uniqconsulting.ch/)
 
 Graylog3 Setup with Ansible
