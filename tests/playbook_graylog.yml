@@ -25,9 +25,23 @@
       immediate: True
       permanent: true
 
-  - name: Open Syslog port 1514/udp
+  - name: Open Syslog port 1514/udp (Syslog)
     firewalld:
       port: "1514/udp"
+      state: enabled
+      immediate: True
+      permanent: true
+
+  - name: Open Syslog port 1514/tcp (Syslog)
+    firewalld:
+      port: "1514/tcp"
+      state: enabled
+      immediate: True
+      permanent: true
+
+  - name: Open Syslog port 2016/udp (Windows GELF)
+    firewalld:
+      port: "2016/udp"
       state: enabled
       immediate: True
       permanent: true

@@ -19,6 +19,7 @@ graylog3_transport_email_web_interface_url: "https://{{nginx_ssl_cert_host}}"
 packages_graylog_EL7:
   - graylog-server
   - pwgen
+  - cronie
 
 packages_nginx_EL7:
   - nginx
