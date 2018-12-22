@@ -1,7 +1,6 @@
 ---
 - name: Install Open JDK
   yum:
-    name: "{{ item }}"
+    name: "{{ packages_java_EL7 }}"
     state: installed
-  with_items: "{{ packages_java_EL7 }}"
 ...

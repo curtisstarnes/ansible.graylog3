@@ -1,9 +1,8 @@
 ---
 - name: Install elasticsearch
   yum:
-    name: "{{ item }}"
+    name: "{{ packages_elasticsearch_EL7 }}"
     state: installed
-  with_items: "{{ packages_elasticsearch_EL7 }}"
 
 - name: configure elastic search cluster name
   lineinfile: 
