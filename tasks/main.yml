@@ -4,19 +4,26 @@
 
 # repo configuration
 - include_tasks: repos.yml
+  tags: [repo]
 
 # openjdk installation
 - include_tasks: java.yml
+  tags: [java]
 
 # mongodb installation
 - include_tasks: mongodb.yml
+  tags: [mongodb]
 
 # elastic search installation and configuration
 - include_tasks: elasticsearch.yml
+  tags: [elasticsearch]
 
 # graylog installation and configuration
 - include_tasks: graylog.yml
+  tags: [graylog]
 - include_tasks: geoip.yml
+  tags: [geoip]
 
 # install and configure nginx reverse proxy
 - include_tasks: nginx.yml
+  tags: [nginx]
