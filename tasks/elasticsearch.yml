@@ -8,7 +8,7 @@
   lineinfile:
     path: /etc/elasticsearch/elasticsearch.yml
     regexp: '^cluster.name:'
-    line: 'cluster.name: {{graylog3_cluster_name}}'
+    line: 'cluster.name: {{ graylog3_cluster_name }}'
 
 - name: configure elasticsearch hostname
   lineinfile:

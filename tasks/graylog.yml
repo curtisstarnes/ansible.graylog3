@@ -116,37 +116,37 @@
   lineinfile:
     path: /etc/graylog/server/server.conf
     regexp: '^transport_email_auth_username'
-    line: 'transport_email_auth_username = {{graylog3_transport_email_auth_username}}'
+    line: 'transport_email_auth_username = {{ graylog3_transport_email_auth_username }}'
 
 - name: Configure Graylog transport_email_auth_password
   lineinfile:
     path: /etc/graylog/server/server.conf
     regexp: '^transport_email_auth_password'
-    line: 'transport_email_auth_password = {{graylog3_transport_email_auth_password}}'
+    line: 'transport_email_auth_password = {{ graylog3_transport_email_auth_password }}'
 
 - name: Configure Graylog transport_email_subject_prefix
   lineinfile:
     path: /etc/graylog/server/server.conf
     regexp: '^transport_email_subject_prefix'
-    line: 'transport_email_subject_prefix = {{graylog3_transport_email_subject_prefix}}'
+    line: 'transport_email_subject_prefix = {{ graylog3_transport_email_subject_prefix }}'
 
 - name: Configure Graylog transport_email_from_email
   lineinfile:
     path: /etc/graylog/server/server.conf
     regexp: '^transport_email_from_email'
-    line: 'transport_email_from_email = {{graylog3_transport_email_from_email}}'
+    line: 'transport_email_from_email = {{ graylog3_transport_email_from_email }}'
 
 - name: Configure Graylog transport_email_web_interface_url
   lineinfile:
     path: /etc/graylog/server/server.conf
     regexp: '^transport_email_web_interface_url'
-    line: 'transport_email_web_interface_url = {{graylog3_transport_email_web_interface_url}}'
+    line: 'transport_email_web_interface_url = {{ graylog3_transport_email_web_interface_url }}'
 
 - name: Configure Graylog dashboard_widget_default_cache_time
   lineinfile:
     path: /etc/graylog/server/server.conf
     regexp: '^dashboard_widget_default_cache_time'
-    line: 'dashboard_widget_default_cache_time = {{graylog3_dashboard_widget_default_cache_time}}'
+    line: 'dashboard_widget_default_cache_time = {{ graylog3_dashboard_widget_default_cache_time }}'
 
 - name: Enable and start Graylog2 server
   service:

@@ -5,7 +5,7 @@ export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin
 umask 077
 
 # cert fqdn
-HOST="{{nginx_ssl_cert_host}}"
+HOST="{{ nginx_ssl_cert_host }}"
 # ca dir
 CA_DIR="/etc/MySsl"
 # cert dir
@@ -14,15 +14,15 @@ BASE_DIR="$CA_DIR/$HOST"
 CA_SUBJ='/C=XX/O=LAB-CA/CN=LabAuthority'
 CERT_SUBJ='/C=XX/ST=XX/L=City/O=Lab'
 # cert validity days
-DAYS="{{nginx_ssl_cert_days}}"
+DAYS="{{ nginx_ssl_cert_days }}"
 # ca keylen
 CA_KEYLEN=4096
 # cert keylen
 PRIV_KEYLEN=2048
-DHPARAM="{{nginx_ssl_cert_dhparam}}"
-KEY_COPY="{{nginx_ssl_cert_key}}"
-CERT_COPY="{{nginx_ssl_cert_crt}}"
-CA_CHAIN_COPY="{{nginx_ssl_cert_ca_chain}}"
+DHPARAM="{{ nginx_ssl_cert_dhparam }}"
+KEY_COPY="{{ nginx_ssl_cert_key }}"
+CERT_COPY="{{ nginx_ssl_cert_crt }}"
+CA_CHAIN_COPY="{{ nginx_ssl_cert_ca_chain }}"
 COPY_OWNER="root:nginx"
 
 mkdir -p ${CA_DIR}/ca

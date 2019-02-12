@@ -5,7 +5,7 @@
 
 - name: Install Graylog Repositry
   yum:
-    name: "{{graylog3_repo_graylog_rpm}}"
+    name: "{{ graylog3_repo_graylog_rpm }}"
 
 - name: Configure Elasticsearch repo
   template:
