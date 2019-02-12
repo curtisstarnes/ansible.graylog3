@@ -8,18 +8,18 @@
     name: "{{graylog3_repo_graylog_rpm}}"
 
 - name: Configure Elasticsearch repo
-  template: 
+  template:
     src: elasticsearch.repo.j2
     dest: /etc/yum.repos.d/elasticsearch.repo
-    owner: root 
-    group: root 
+    owner: root
+    group: root
     mode: 0644
 
 - name: Configure stable MongoDB repo
-  template: 
-    src: mongodb-org.repo.j2 
+  template:
+    src: mongodb-org.repo.j2
     dest: /etc/yum.repos.d/mongodb-org.repo
-    owner: root 
-    group: root 
+    owner: root
+    group: root
     mode: 0644
 ...

@@ -5,14 +5,14 @@
     state: installed
 
 - name: Register checksum of /etc/graylog/server/server.conf
-  stat: 
+  stat:
     path: /etc/graylog/server/server.conf
   register: graylog3_conf_before
 
 - name: Configure Graylog2 admin password if needed
-  lineinfile: 
+  lineinfile:
     path: /etc/graylog/server/server.conf
-    regexp: '^root_password_sha2' 
+    regexp: '^root_password_sha2'
     line: root_password_sha2 = {{ graylog3_admin_password }} | password_hash('sha256', '')
 
 - name: Check if password salt is present (check length)
@@ -21,131 +21,131 @@
   changed_when: false
 
 - name: Configure Graylog2 password salt
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^password_secret' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^password_secret'
     line: password_secret = {{ lookup('password', '/dev/null length=96 chars=ascii_letters') }}
   changed_when: false
   when: graylog3_password_secret_length.stdout|int < 80
 
 - name: enable elasticsearch shrads
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^elasticsearch_shards' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^elasticsearch_shards'
     line: 'elasticsearch_shards = 1'
 
 - name: set graylog cluster name
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
     regexp: '^elasticsearch_cluster_name'
     line: 'elasticsearch_cluster_name = {{graylog3_cluster_name}}'
 
 - name: Set Graylog2 web listen uri
-  lineinfile: 
+  lineinfile:
     path: /etc/graylog/server/server.conf
     regexp: '^http_bind_address'
     line: 'http_bind_address = 127.0.0.1:9000'
 
 - name: Set root Timezone
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^root_timezone' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^root_timezone'
     line: 'root_timezone = {{graylog3_root_timezone}}'
 
 - name: Configure Graylog root email
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^root_email' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^root_email'
     line: 'root_email = {{graylog3_root_email}}'
 
 - name: Configure Graylog root email
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^root_email' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^root_email'
     line: 'root_email = {{graylog3_root_email}}'
 
 - name: Configure Graylog http_enable_gzip
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^http_enable_gzip' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^http_enable_gzip'
     line: 'http_enable_gzip = true'
 
 - name: Configure Graylog allow_highlighting
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^allow_highlighting' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^allow_highlighting'
     line: 'allow_highlighting = {{graylog3_allow_highlighting}}'
 
 - name: Configure Graylog transport_email_enabled
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^transport_email_enabled' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^transport_email_enabled'
     line: 'transport_email_enabled = {{graylog3_transport_email_enabled}}'
 
 - name: Configure Graylog transport_email_hostname
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
     regexp: '^transport_email_hostname'
     line: 'transport_email_hostname = graylog3_transport_email_hostname'
 
 - name: Configure Graylog transport_email_port
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^transport_email_port' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^transport_email_port'
     line: 'transport_email_port = {{graylog3_transport_email_port}}'
 
 - name: Configure Graylog transport_email_use_auth
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^transport_email_use_auth' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^transport_email_use_auth'
     line: 'transport_email_use_auth = {{graylog3_transport_email_use_auth}}'
 
 - name: Configure Graylog transport_email_use_tls
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^transport_email_use_tls' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^transport_email_use_tls'
     line: 'transport_email_use_tls = {{graylog3_transport_email_use_tls}}'
 
 - name: Configure Graylog transport_email_use_ssl
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
     regexp: '^transport_email_use_ssl'
     line: 'transport_email_use_ssl = {{graylog3_transport_email_use_ssl}}'
 
 - name: Configure Graylog transport_email_auth_username
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^transport_email_auth_username' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^transport_email_auth_username'
     line: 'transport_email_auth_username = {{graylog3_transport_email_auth_username}}'
 
 - name: Configure Graylog transport_email_auth_password
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^transport_email_auth_password' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^transport_email_auth_password'
     line: 'transport_email_auth_password = {{graylog3_transport_email_auth_password}}'
 
 - name: Configure Graylog transport_email_subject_prefix
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^transport_email_subject_prefix' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^transport_email_subject_prefix'
     line: 'transport_email_subject_prefix = {{graylog3_transport_email_subject_prefix}}'
 
 - name: Configure Graylog transport_email_from_email
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^transport_email_from_email' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^transport_email_from_email'
     line: 'transport_email_from_email = {{graylog3_transport_email_from_email}}'
 
 - name: Configure Graylog transport_email_web_interface_url
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^transport_email_web_interface_url' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^transport_email_web_interface_url'
     line: 'transport_email_web_interface_url = {{graylog3_transport_email_web_interface_url}}'
 
 - name: Configure Graylog dashboard_widget_default_cache_time
-  lineinfile: 
-    path: /etc/graylog/server/server.conf 
-    regexp: '^dashboard_widget_default_cache_time' 
+  lineinfile:
+    path: /etc/graylog/server/server.conf
+    regexp: '^dashboard_widget_default_cache_time'
     line: 'dashboard_widget_default_cache_time = {{graylog3_dashboard_widget_default_cache_time}}'
 
 - name: Enable and start Graylog2 server
@@ -155,12 +155,12 @@
     enabled: yes
 
 - name: check memory
-  debug: 
+  debug:
     msg: "WARNING: Graylog Server VM should at least have 2GB of memory ! ! ! *****************************"
   when: ansible_memtotal_mb < 2048
 
 - name: Register checksum of /etc/graylog/server/server.conf
-  stat: 
+  stat:
     path: /etc/graylog/server/server.conf
   register: graylog3_conf_after
 

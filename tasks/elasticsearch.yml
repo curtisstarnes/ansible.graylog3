@@ -5,16 +5,16 @@
     state: installed
 
 - name: configure elastic search cluster name
-  lineinfile: 
+  lineinfile:
     path: /etc/elasticsearch/elasticsearch.yml
-    regexp: '^cluster.name:' 
-    line: 'cluster.name: {{graylog3_cluster_name}}' 
+    regexp: '^cluster.name:'
+    line: 'cluster.name: {{graylog3_cluster_name}}'
 
 - name: configure elasticsearch hostname
-  lineinfile: 
+  lineinfile:
     path: /etc/elasticsearch/elasticsearch.yml
-    regexp: 'network.host:' 
-    line: 'network.host: localhost' 
+    regexp: 'network.host:'
+    line: 'network.host: localhost'
 
 - name: Enable and start elasticsearch
   service:

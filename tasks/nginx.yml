@@ -5,8 +5,8 @@
     name: "{{ packages_nginx_EL7 }}"
 
 - name: enable nginx
-  service: 
-    name: nginx 
+  service:
+    name: nginx
     state: started
     enabled: yes
 
@@ -32,5 +32,5 @@
     group: nginx
     mode: 0750
   notify: restart nginx
- 
+
 ...
