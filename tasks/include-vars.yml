@@ -6,5 +6,5 @@
   register: local_varfile
 - name: Load a variable file "/etc/ansible/{{ ansible_nodename }}.yml"
   include_vars: "/etc/ansible/{{ ansible_nodename }}.yml"
-  when: local_varfile.stat.exists == true
+  when: local_varfile.stat.exists
 
