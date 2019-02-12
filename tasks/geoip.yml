@@ -21,4 +21,5 @@
   shell: /usr/local/sbin/geoip-update.sh
   args:
     warn: false
+  changed_when: false
 ...
