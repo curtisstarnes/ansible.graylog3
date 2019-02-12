@@ -4,32 +4,16 @@
     name: "{{ packages_graylog_EL7 }}"
     state: installed
 
-- name: Register md5sum of /etc/graylog/server/server.conf
-  shell: md5sum /etc/graylog/server/server.conf
-  register: graylog3_conf_md5sum_before
-  changed_when: false
-
-- name: Generate admin password sha2 hash
-  shell: "echo -n {{ graylog3_admin_password }} | sha256sum | awk '{print $1}'"
-  register: graylog3_admin_password_sha
-  changed_when: false
-
-- name: diff current and needed password hash
-  shell: grep ^root_password_sha2 /etc/graylog/server/server.conf | grep "{{ graylog3_admin_password_sha.stdout }}" || true
-  register: graylog3_admin_password_diff
-  changed_when: false
+- name: Register checksum of /etc/graylog/server/server.conf
+  stat: 
+    path: /etc/graylog/server/server.conf
+  register: graylog3_conf_before
 
 - name: Configure Graylog2 admin password if needed
   lineinfile: 
     path: /etc/graylog/server/server.conf
     regexp: '^root_password_sha2' 
-    line: 'root_password_sha2 = {{ graylog3_admin_password_sha.stdout }}'
-  when: graylog3_admin_password_diff.stdout.find('root_password_sha2') != 0
-
-- name: generate password salt
-  shell: pwgen -s 96 1
-  register: graylog3_password_secret
-  changed_when: false
+    line: root_password_sha2 = {{ graylog3_admin_password }} | password_hash('sha256', '')
 
 - name: Check if password salt is present (check length)
   shell: "grep 'password_secret =' /etc/graylog/server/server.conf | tail -1 | wc -c"
@@ -40,7 +24,7 @@
   lineinfile: 
     path: /etc/graylog/server/server.conf 
     regexp: '^password_secret' 
-    line: 'password_secret = {{graylog3_password_secret.stdout}}'
+    line: password_secret = {{ lookup('password', '/dev/null length=96 chars=ascii_letters') }}
   changed_when: false
   when: graylog3_password_secret_length.stdout|int < 80
 
@@ -175,14 +159,14 @@
     msg: "WARNING: Graylog Server VM should at least have 2GB of memory ! ! ! *****************************"
   when: ansible_memtotal_mb < 2048
 
-- name: Register md5sum of /etc/graylog/server/server.conf
-  shell: md5sum /etc/graylog/server/server.conf
-  register: graylog3_conf_md5sum_after
-  changed_when: false
+- name: Register checksum of /etc/graylog/server/server.conf
+  stat: 
+    path: /etc/graylog/server/server.conf
+  register: graylog3_conf_after
 
 - name: Restart graylog server if needed
   service:
     name: graylog-server
     state: restarted
-  when: graylog3_conf_md5sum_before.stdout != graylog3_conf_md5sum_after.stdout
+  when: graylog3_conf_before.stat.checksum != graylog3_conf_after.stat.checksum
 ...

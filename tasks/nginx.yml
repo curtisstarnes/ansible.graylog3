@@ -3,7 +3,6 @@
 - name: Install nginx packages
   yum:
     name: "{{ packages_nginx_EL7 }}"
-    state: present
 
 - name: enable nginx
   service: 
