@@ -13,7 +13,7 @@
   lineinfile:
     path: /etc/graylog/server/server.conf
     regexp: '^root_password_sha2'
-    line: root_password_sha2 = {{ graylog3_admin_password }} | password_hash('sha256', '')
+    line: root_password_sha2 = {{ graylog3_admin_password|hash('sha256')}}
 
 - name: Check if password salt is present (check length)
   shell: "grep 'password_secret =' /etc/graylog/server/server.conf | tail -1 | wc -c"
