@@ -1,5 +1,5 @@
 ---
-# uniQconsulting.graylog3/tasks/main.yml
+# uniqconsulting.graylog3/tasks/main.yml
 - import_tasks: include-vars.yml
 
 # repo configuration

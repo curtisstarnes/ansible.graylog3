@@ -3,7 +3,7 @@
 - name: Install and configure Graylog Server
   hosts: vm21
   roles:
-    - role: uniQconsulting.graylog3
+    - role: uniqconsulting.graylog3
       graylog3_admin_password: secret
 
   tasks:

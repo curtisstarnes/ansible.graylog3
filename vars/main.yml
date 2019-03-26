@@ -1,5 +1,5 @@
 ---
-# vars/main.yml from uniQconsulting.graylog3
+# vars/main.yml from uniqconsulting.graylog3
 
 # --- GENERAL CONFIG ---
 graylog3_cluster_name: "graylog"
