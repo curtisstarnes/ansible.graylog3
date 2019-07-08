@@ -169,4 +169,23 @@
     name: graylog-server
     state: restarted
   when: graylog3_conf_before.stat.checksum != graylog3_conf_after.stat.checksum
+
+- name: Copy open_firewall.sh script to local-tmp
+  template:
+    src: open_firewall.sh.j2
+    dest: /tmp/open_firewall.sh
+    owner: root
+    group: root
+    mode: 0700
+  when: "graylog3_setup_firewalld_rules == true"
+
+- name: Execute the open_firewall.sh script
+  command: sh /tmp/open_firewall.sh
+  when: "graylog3_setup_firewalld_rules == true"
+
+- name: Delete open_firewall.sh
+  file:
+    state: absent
+    path: "/tmp/open_firewall.sh"
+  when: "graylog3_setup_firewalld_rules == true"
 ...

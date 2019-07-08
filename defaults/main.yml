@@ -7,6 +7,7 @@ graylog3_admin_password: "graylog"
 graylog3_root_timezone: "Europe/Zurich"
 graylog3_allow_highlighting: true
 graylog3_dashboard_widget_default_cache_time: 60s
+graylog3_setup_firewalld_rules: true
 
 # --- MAIL CONFIG ---
 graylog3_transport_email_enabled: false

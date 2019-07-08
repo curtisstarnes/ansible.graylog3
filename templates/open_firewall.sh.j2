@@ -1,0 +1,14 @@
+#!/bin/bash
+
+firewall-cmd --permanent --add-masquerade
+firewall-cmd --permanent --add-port=514/tcp
+firewall-cmd --permanent --add-port=514/udp
+firewall-cmd --permanent --add-port=1514/tcp
+firewall-cmd --permanent --add-port=1514/udp
+firewall-cmd --permanent --add-port=2016/tcp
+firewall-cmd --permanent --add-port=2016/udp
+firewall-cmd --permanent --add-forward-port=port=514:proto=tcp:toport=1514
+firewall-cmd --permanent --add-forward-port=port=514:proto=udp:toport=1514
+firewall-cmd --permanent --direct --add-rule ipv4 nat OUTPUT 0 -p udp -o lo --dport 514 -j REDIRECT --to-ports 1514
+firewall-cmd --permanent --direct --add-rule ipv4 nat OUTPUT 0 -p tcp -o lo --dport 514 -j REDIRECT --to-ports 1514
+firewall-cmd --reload
