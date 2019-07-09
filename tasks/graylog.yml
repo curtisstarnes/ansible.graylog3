@@ -170,22 +170,33 @@
     state: restarted
   when: graylog3_conf_before.stat.checksum != graylog3_conf_after.stat.checksum
 
-- name: Copy open_firewall.sh script to local-tmp
-  template:
-    src: open_firewall.sh.j2
-    dest: /tmp/open_firewall.sh
-    owner: root
-    group: root
-    mode: 0700
-  when: "graylog3_setup_firewalld_rules == true"
 
-- name: Execute the open_firewall.sh script
-  command: sh /tmp/open_firewall.sh
-  when: "graylog3_setup_firewalld_rules == true"
+# Firewalld
+- name: Check if firewalld is running
+  shell: service firewalld status warn=false
+  register: _svc_firewalld
+  failed_when: _svc_firewalld.rc != 0 and ("unrecognized service" not in _svc_firewalld.stderr)
+  ignore_errors: true
 
-- name: Delete open_firewall.sh
-  file:
-    state: absent
-    path: "/tmp/open_firewall.sh"
-  when: "graylog3_setup_firewalld_rules == true"
+- name: Setup firewalld rule
+  shell: firewall-cmd --permanent --add-masquerade
+  when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
+
+- name: Open Ports
+  shell: firewall-cmd --permanent --add-port={{ item.value.port }}/{{ item.value.protocol }}
+  when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
+  loop: "{{ lookup('dict', graylog3_firewalld_ports, wantlist=True) }}"
+
+- name: Add Port-Forewards
+  shell: |
+    firewall-cmd --permanent --add-forward-port=port={{ item.value.from }}:proto={{ item.value.protocol }}:toport={{ item.value.to }}
+    firewall-cmd --permanent --direct --add-rule ipv4 nat OUTPUT 0 -p {{ item.value.protocol }} -o lo --dport {{ item.value.from }} -j REDIRECT --to-ports {{ item.value.to }}
+  when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
+  loop: "{{ lookup('dict', graylog3_firewalld_port_forwards, wantlist=True) }}"
+
+- name: Restart Firewalld
+  service:
+    name: firewalld
+    state: restarted
+  when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
 ...
