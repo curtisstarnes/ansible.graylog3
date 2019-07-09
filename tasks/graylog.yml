@@ -169,4 +169,37 @@
     name: graylog-server
     state: restarted
   when: graylog3_conf_before.stat.checksum != graylog3_conf_after.stat.checksum
+
+
+# Firewalld
+- name: Check if firewalld is running
+  shell: service firewalld status warn=false
+  register: _svc_firewalld
+  failed_when: _svc_firewalld.rc != 0 and ("unrecognized service" not in _svc_firewalld.stderr)
+  ignore_errors: true
+
+- name: Setup firewalld rule
+  shell: firewall-cmd --permanent --add-masquerade
+  when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
+
+
+- name: Open Ports
+  shell: firewall-cmd --permanent --add-port={{ item.port }}/{{ item.protocol }}
+  when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
+  with_items: 
+    - "{{ graylog3_firewalld_ports }}"
+
+- name: Add Port-Forewards
+  shell: |
+    firewall-cmd --permanent --add-forward-port=port={{ item.from }}:proto={{ item.protocol }}:toport={{ item.to }}
+    firewall-cmd --permanent --direct --add-rule ipv4 nat OUTPUT 0 -p {{ item.protocol }} -o lo --dport {{ item.from }} -j REDIRECT --to-ports {{ item.to }}
+  when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
+  with_items: 
+    - "{{ graylog3_firewalld_port_forwards }}"
+
+- name: Restart Firewalld
+  service:
+    name: firewalld
+    state: restarted
+  when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
 ...

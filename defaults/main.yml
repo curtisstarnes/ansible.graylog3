@@ -8,6 +8,30 @@ graylog3_root_timezone: "Europe/Zurich"
 graylog3_allow_highlighting: true
 graylog3_dashboard_widget_default_cache_time: 60s
 
+# --- FIREWALLD CONFIG ---
+graylog3_firewalld_setup_rules: true
+graylog3_firewalld_ports:
+  - port: 1514
+    protocol: udp
+  - port: 514
+    protocol: udp
+  - port: 2016
+    protocol: udp
+  - port: 1514
+    protocol: tcp
+  - port: 514
+    protocol: tcp
+  - port: 2016
+    protocol: tcp
+graylog3_firewalld_port_forwards:
+  - from: 514
+    to: 1514
+    protocol: udp
+  - from: 514
+    to: 1514
+    protocol: tcp
+
+
 # --- MAIL CONFIG ---
 graylog3_transport_email_enabled: false
 graylog3_transport_email_hostname: mail.example.com
