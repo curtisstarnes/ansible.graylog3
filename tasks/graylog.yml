@@ -182,17 +182,20 @@
   shell: firewall-cmd --permanent --add-masquerade
   when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
 
+
 - name: Open Ports
-  shell: firewall-cmd --permanent --add-port={{ item.value.port }}/{{ item.value.protocol }}
+  shell: firewall-cmd --permanent --add-port={{ item.port }}/{{ item.protocol }}
   when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
-  loop: "{{ lookup('dict', graylog3_firewalld_ports, wantlist=True) }}"
+  with_items: 
+    - "{{ graylog3_firewalld_ports }}"
 
 - name: Add Port-Forewards
   shell: |
-    firewall-cmd --permanent --add-forward-port=port={{ item.value.from }}:proto={{ item.value.protocol }}:toport={{ item.value.to }}
-    firewall-cmd --permanent --direct --add-rule ipv4 nat OUTPUT 0 -p {{ item.value.protocol }} -o lo --dport {{ item.value.from }} -j REDIRECT --to-ports {{ item.value.to }}
+    firewall-cmd --permanent --add-forward-port=port={{ item.from }}:proto={{ item.protocol }}:toport={{ item.to }}
+    firewall-cmd --permanent --direct --add-rule ipv4 nat OUTPUT 0 -p {{ item.protocol }} -o lo --dport {{ item.from }} -j REDIRECT --to-ports {{ item.to }}
   when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
-  loop: "{{ lookup('dict', graylog3_firewalld_port_forwards, wantlist=True) }}"
+  with_items: 
+    - "{{ graylog3_firewalld_port_forwards }}"
 
 - name: Restart Firewalld
   service:

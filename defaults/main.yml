@@ -11,33 +11,26 @@ graylog3_dashboard_widget_default_cache_time: 60s
 # --- FIREWALLD CONFIG ---
 graylog3_firewalld_setup_rules: true
 graylog3_firewalld_ports:
-  1514_udp:
-    port: 1514
+  - port: 1514
     protocol: udp
-  514_udp:
-    port: 514
+  - port: 514
     protocol: udp
-  2016_udp:
-    port: 2016
+  - port: 2016
     protocol: udp
-  1514_tcp:
-    port: 1514
+  - port: 1514
     protocol: tcp
-  514_tcp:
-    port: 514
+  - port: 514
     protocol: tcp
-  2016_tcp:
-    port: 2016
+  - port: 2016
     protocol: tcp
 graylog3_firewalld_port_forwards:
-  514_udp :
-    from: 514
+  - from: 514
     to: 1514
     protocol: udp
-  514_tcp:
-    from: 514
+  - from: 514
     to: 1514
     protocol: tcp
+
 
 # --- MAIL CONFIG ---
 graylog3_transport_email_enabled: false
