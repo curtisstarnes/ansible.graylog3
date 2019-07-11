@@ -34,4 +34,6 @@ packages_java_EL7:
 packages_mongodb_EL7:
   - libselinux-python
   - mongodb-org
+
+package_graylog_enterprise_EL7: "graylog-enterprise-plugins"
 ...

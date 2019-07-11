@@ -4,6 +4,12 @@
     name: "{{ packages_graylog_EL7 }}"
     state: installed
 
+- name: Install graylog enterprise plugin
+  yum:
+    name: "{{ package_graylog_enterprise_EL7 }}"
+    state: installed
+  when: graylog3_install_enterprise_plugin == true
+
 - name: Register checksum of /etc/graylog/server/server.conf
   stat:
     path: /etc/graylog/server/server.conf
