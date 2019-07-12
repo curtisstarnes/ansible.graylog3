@@ -24,6 +24,8 @@ graylog3_firewalld_ports:
     protocol: tcp
   - port: 2016
     protocol: tcp
+  - port: 443
+    protocol: tcp
 graylog3_firewalld_port_forwards:
   - from: 514
     to: 1514
