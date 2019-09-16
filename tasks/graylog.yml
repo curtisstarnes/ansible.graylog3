@@ -208,4 +208,29 @@
     name: firewalld
     state: restarted
   when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
+
+
+# Addition ; config heap-size
+- name: Configure elasticsearch heap-size
+  replace:
+    path: /etc/sysconfig/graylog-server
+    regexp: '-Xms([0-9]+[kmgtKMGT])'
+    replace: "-Xms{{ graylog3_jvm_graylog_heap }} "
+  register: heapsizeline1
+
+- name: Configure elasticsearch heap-size
+  replace:
+    path: /etc/sysconfig/graylog-server
+    regexp: '-Xmx([0-9]+[kmgtKMGT])'
+    replace: "-Xmx{{ graylog3_jvm_graylog_heapmax }} "
+  register: heapsizeline2
+
+- name: Restart graylog if necessary
+  service:
+    name: graylog-server
+    state: restarted
+  when: heapsizeline1.changed or heapsizeline2.changed
+
+
+
 ...

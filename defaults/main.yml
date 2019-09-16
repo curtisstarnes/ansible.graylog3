@@ -9,6 +9,11 @@ graylog3_allow_highlighting: true
 graylog3_dashboard_widget_default_cache_time: 60s
 graylog3_install_enterprise_plugin: false
 
+# --- JVM HEAP SIZE ---
+graylog3_jvm_elasticsearch_heap: 1024m
+graylog3_jvm_graylog_heapmax: 1g
+graylog3_jvm_graylog_heap: 1g 
+
 # --- FIREWALLD CONFIG ---
 graylog3_firewalld_setup_rules: true
 graylog3_firewalld_ports:
