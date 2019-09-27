@@ -211,14 +211,14 @@
 
 
 # Addition ; config heap-size
-- name: Configure elasticsearch heap-size
+- name: Configure graylog heap-size
   replace:
     path: /etc/sysconfig/graylog-server
     regexp: '-Xms([0-9]+[kmgtKMGT])'
     replace: "-Xms{{ graylog3_jvm_graylog_heap }} "
   register: heapsizeline1
 
-- name: Configure elasticsearch heap-size
+- name: Configure graylog heap-size
   replace:
     path: /etc/sysconfig/graylog-server
     regexp: '-Xmx([0-9]+[kmgtKMGT])'
