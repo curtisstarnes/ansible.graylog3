@@ -21,4 +21,21 @@
     name: elasticsearch
     state: started
     enabled: yes
+
+# Addition ; config heap-size
+- name: Configure elasticsearch heap-size
+  lineinfile:
+    path: /etc/sysconfig/elasticsearch
+    line: ES_HEAP_SIZE={{ graylog3_jvm_elasticsearch_heap }}
+    regexp: '^(.*)ES_HEAP_SIZE=(.*)$'
+  register: heapsizeline
+
+- name: Restart elasticsearch if necessary
+  service:
+    name: elasticsearch
+    state: restarted
+  when: heapsizeline.changed
+
+
+
 ...
