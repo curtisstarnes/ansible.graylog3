@@ -22,6 +22,10 @@
 - import_tasks: nginx.yml
   tags: [graylog3,nginx]
 
+# install and configure graylog reverse proxy
+- import_tasks: graylog.yml
+  tags: [graylog3,graylog]
+
 
 # Copy & Register uQcCheck
 - name: Copy uQcCheck File
