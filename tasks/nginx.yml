@@ -33,4 +33,23 @@
     mode: 0750
   notify: restart nginx
 
+# Firewalld
+- name: Check if firewalld is running
+  shell: service firewalld status warn=false
+  register: _svc_firewalld
+  failed_when: _svc_firewalld.rc != 0 and ("unrecognized service" not in _svc_firewalld.stderr)
+  ignore_errors: true
+
+- name: Open Ports
+  shell: firewall-cmd --permanent --add-port=443/tcp
+  when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
+  with_items: 
+    - "{{ graylog3_firewalld_ports }}"
+
+- name: Restart Firewalld
+  service:
+    name: firewalld
+    state: restarted
+  when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
+
 ...

@@ -4,26 +4,43 @@
 
 # repo configuration
 - import_tasks: repos.yml
-  tags: [repo]
+  tags: [graylog3,repo]
 
 # openjdk installation
 - import_tasks: java.yml
-  tags: [java]
+  tags: [graylog3,java]
 
 # mongodb installation
 - import_tasks: mongodb.yml
-  tags: [mongodb]
+  tags: [graylog3,mongodb]
 
 # elastic search installation and configuration
 - import_tasks: elasticsearch.yml
-  tags: [elasticsearch]
-
-# graylog installation and configuration
-- import_tasks: graylog.yml
-  tags: [graylog]
-- import_tasks: geoip.yml
-  tags: [geoip]
+  tags: [graylog3,elasticsearch]
 
 # install and configure nginx reverse proxy
 - import_tasks: nginx.yml
-  tags: [nginx]
+  tags: [graylog3,nginx]
+
+
+# Copy & Register uQcCheck
+- name: Copy uQcCheck File
+  local_action: 
+    module: copy
+    src: tests/uQcCheck_graylog.yml
+    dest: "{{ playbook_dir }}/uQcCheck/uQcCheck_graylog.yml"
+  ignore_errors: yes
+  tags:
+  - graylog3
+  - installation
+
+- name: Register uQcCheck File
+  local_action: 
+    module: lineinfile
+    line: "- import_playbook: uQcCheck/uQcCheck_graylog.yml"
+    path: "{{ playbook_dir }}/task_99_uQcCheck.yml"
+  ignore_errors: yes
+  tags:
+  - graylog3
+  - installation
+  

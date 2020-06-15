@@ -53,4 +53,4 @@ graylog3_transport_email_subject_prefix: "[graylog]"
 graylog3_transport_email_from_email: "graylog@example.com"
 
 # --- REPO CONFIG ---
-graylog3_repo_graylog_rpm: https://packages.graylog2.org/repo/packages/graylog-3.0-repository_latest.rpm
+graylog3_repo_graylog_rpm: https://packages.graylog2.org/repo/packages/graylog-3.3-repository_latest.rpm

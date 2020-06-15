@@ -16,6 +16,7 @@ Requirements
 
 * Currently only tested with CentOS 7
 * Ansible 2.4 or higher is required for this Ansible Role
+* `uniqconsulting.geoip` with `geoip_dat` enabled
 
 Role Variables
 --------------
@@ -33,7 +34,7 @@ Example Playbook
 ----------------
 
 Example playbooks for this role are located in ´test´ folder:
-* `tests/playbook_graylog.yml`
+* `tests/install_X_graylog.yml`
 
 uniQconsulting ag
 -----------------
