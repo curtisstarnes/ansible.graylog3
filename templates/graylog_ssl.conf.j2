@@ -22,7 +22,7 @@ server {
         add_header X-Frame-Options DENY;
         add_header X-Content-Type-Options nosniff;
   
-        ssl_dhparam {{ nginx_ssl_cert_dhparam }};
+        #ssl_dhparam {{ nginx_ssl_cert_dhparam }};
  
     location / {
         proxy_set_header Host $http_host;

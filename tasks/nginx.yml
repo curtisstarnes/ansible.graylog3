@@ -19,7 +19,9 @@
 #    changed_when: False
 
 - name: Create cert if missing
-  shell: test -f {{ nginx_ssl_cert_crt }} || openssl req -x509 -nodes -subj "/C=CH/ST=ZH/O=IT/CN={{ ansible_fqdn }}" -newkey rsa:4096 -keyout {{ nginx_ssl_cert_key }} -out {{ nginx_ssl_cert_crt }} -days {{ nginx_ssl_cert_days }}
+  shell: |
+    test -f {{ nginx_ssl_cert_crt }} || openssl req -x509 -nodes -subj "/C=CH/ST=ZH/O=IT/CN={{ ansible_fqdn }}" -newkey rsa:4096 -keyout {{ nginx_ssl_cert_key }} -out {{ nginx_ssl_cert_crt }} -days {{ nginx_ssl_cert_days }}
+    test -f {{ nginx_ssl_cert_dhparam }} || openssl dhparam -out {{ nginx_ssl_cert_dhparam }} 096
 
 - name: create/update nginx ssl config
   template:
