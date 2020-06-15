@@ -10,19 +10,22 @@
     state: started
     enabled: yes
 
+# Legacy
+#- block:
+#  - name: copy selfsigned ssl cert creator script
+#    template:
+#      src: create-cert.sh.j2
+#      dest: /usr/local/sbin/create-cert.sh
+#      owner: root
+#      group: root
+#      mode: 0700
+#
+#  - name: create/update self signed cert
+#    shell: /usr/local/sbin/create-cert.sh
+#    changed_when: False
 
-- block:
-  - name: copy selfsigned ssl cert creator script
-    template:
-      src: create-cert.sh.j2
-      dest: /usr/local/sbin/create-cert.sh
-      owner: root
-      group: root
-      mode: 0700
-
-  - name: create/update self signed cert
-    shell: /usr/local/sbin/create-cert.sh
-    changed_when: False
+- name: Create cert if missing
+  shell: test -f {{ nginx_ssl_cert_crt }} || openssl req -x509 -nodes -subj "/C=CH/ST=ZH/O=IT/CN={{ ansible_fqdn }}" -newkey rsa:4096 -keyout {{ nginx_ssl_cert_key }} -out {{ nginx_ssl_cert_crt }} -days {{ nginx_ssl_cert_days }}
 
 - name: create/update nginx ssl config
   template:
