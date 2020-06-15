@@ -1,8 +1,9 @@
 ---
 - name: Install MongoDB
   yum:
-    name: "{{ packages_mongodb_EL7 }}"
+    name: "{{ vars['packages_mongodb_' + ( ansible_distribution | lower ) + ( ansible_distribution_major_version | lower ) ] }}" 
     state: installed
+
 
 - name: Enable and start mongod
   service:

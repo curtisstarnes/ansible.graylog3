@@ -31,8 +31,12 @@ packages_elasticsearch_EL7:
 packages_java_EL7:
   - java-1.8.0-openjdk-headless
 
-packages_mongodb_EL7:
+packages_mongodb_centos7:
   - libselinux-python
+  - mongodb-org
+
+packages_mongodb_centos8:
+  - python3-libselinux
   - mongodb-org
 
 package_graylog_enterprise_EL7: "graylog-enterprise-plugins"
