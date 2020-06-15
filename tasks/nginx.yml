@@ -4,12 +4,6 @@
   yum:
     name: "{{ packages_nginx_EL7 }}"
 
-- name: enable nginx
-  service:
-    name: nginx
-    state: started
-    enabled: yes
-
 # Legacy
 #- block:
 #  - name: copy selfsigned ssl cert creator script
@@ -55,4 +49,10 @@
     state: restarted
   when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
 
+
+- name: enable nginx
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
 ...
