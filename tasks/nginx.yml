@@ -4,25 +4,24 @@
   yum:
     name: "{{ packages_nginx_EL7 }}"
 
-- name: enable nginx
-  service:
-    name: nginx
-    state: started
-    enabled: yes
+# Legacy
+#- block:
+#  - name: copy selfsigned ssl cert creator script
+#    template:
+#      src: create-cert.sh.j2
+#      dest: /usr/local/sbin/create-cert.sh
+#      owner: root
+#      group: root
+#      mode: 0700
+#
+#  - name: create/update self signed cert
+#    shell: /usr/local/sbin/create-cert.sh
+#    changed_when: False
 
-
-- block:
-  - name: copy selfsigned ssl cert creator script
-    template:
-      src: create-cert.sh.j2
-      dest: /usr/local/sbin/create-cert.sh
-      owner: root
-      group: root
-      mode: 0700
-
-  - name: create/update self signed cert
-    shell: /usr/local/sbin/create-cert.sh
-    changed_when: False
+- name: Create cert if missing
+  shell: |
+    test -f {{ nginx_ssl_cert_crt }} || openssl req -x509 -nodes -subj "/C=CH/ST=ZH/O=IT/CN={{ ansible_fqdn }}" -newkey rsa:4096 -keyout {{ nginx_ssl_cert_key }} -out {{ nginx_ssl_cert_crt }} -days {{ nginx_ssl_cert_days }}
+    test -f {{ nginx_ssl_cert_dhparam }} || openssl dhparam -out {{ nginx_ssl_cert_dhparam }} {{ nginx_ssl_cert_dhparam_nr }}
 
 - name: create/update nginx ssl config
   template:
@@ -33,4 +32,29 @@
     mode: 0750
   notify: restart nginx
 
+# Firewalld
+- name: Check if firewalld is running
+  shell: service firewalld status warn=false
+  register: _svc_firewalld
+  failed_when: _svc_firewalld.rc != 0 and ("unrecognized service" not in _svc_firewalld.stderr)
+  ignore_errors: true
+
+- name: Open Ports
+  shell: firewall-cmd --permanent --add-port=443/tcp
+  when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
+  with_items: 
+    - "{{ graylog3_firewalld_ports }}"
+
+- name: Restart Firewalld
+  service:
+    name: firewalld
+    state: restarted
+  when: _svc_firewalld.rc == 0 and graylog3_firewalld_setup_rules == true
+
+
+- name: enable nginx
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
 ...

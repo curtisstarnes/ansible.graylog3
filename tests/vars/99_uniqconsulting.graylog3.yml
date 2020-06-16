@@ -1,0 +1,24 @@
+---
+# Base Settings
+graylog3_root_email: "graylogadmin@example.com"
+graylog3_admin_password: "graylog"
+graylog3_root_timezone: "Europe/Zurich"
+graylog3_install_enterprise_plugin: false
+
+# Mailing
+graylog3_transport_email_enabled: false
+graylog3_transport_email_hostname: mail.example.com
+graylog3_transport_email_port: 587
+graylog3_transport_email_use_auth: false
+graylog3_transport_email_use_tls: true
+graylog3_transport_email_use_ssl: false
+graylog3_transport_email_auth_username: "you@example.com"
+graylog3_transport_email_auth_password:  "secret"
+graylog3_transport_email_subject_prefix: "[graylog]"
+graylog3_transport_email_from_email: "graylog@example.com"
+
+# Siziing
+graylog3_jvm_elasticsearch_heap: {{ (ansible_memtotal_mb/2-1024)|round|int }}m
+graylog3_jvm_graylog_heapmax: 2g
+graylog3_jvm_graylog_heap: 1g
+...
