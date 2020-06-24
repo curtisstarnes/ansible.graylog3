@@ -1,0 +1,14 @@
+# to see channels listed in the standard order
+Get-WinEvent -ListLog *
+
+# to sort more active channels to the top of the list
+Get-WinEvent -ListLog * | sort RecordCount -Descending
+
+# to see channels present on a remote computer
+Get-WinEvent -ListLog * -ComputerName <hostname>
+
+
+
+# Links
+https://help.sumologic.com/03Send-Data/Sources/01Sources-for-Installed-Collectors/Local-Windows-Event-Log-Source/Local-Windows-Event-Source-Custom-Channels
+https://nxlog.co/docs/nxlog-ce/nxlog-reference-manual.html#im_msvistalog
